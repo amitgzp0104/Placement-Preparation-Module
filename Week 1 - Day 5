@@ -1,0 +1,242 @@
+# Week- 1, Day- 5
+
+#Problem 1st- Reverse a Linked List
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        if(head == NULL){
+            return head;
+            
+        }
+        
+        if(head ->next == NULL ){
+            return head;
+        }
+        ListNode* prev = head;
+        ListNode* curr = head -> next;
+        prev -> next = NULL;
+        
+        while(curr -> next != NULL){
+            ListNode* nxt = curr -> next;
+            curr -> next = prev;
+            //prev -> next = NULL;
+            prev = curr;
+            curr = nxt;
+            
+        }
+        curr -> next = prev;
+        
+        return curr;
+    }
+};
+
+#Problem 2nd - Middle of the Linked List
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast -> next != NULL && fast -> next -> next != NULL){
+            slow = slow -> next;
+            fast = fast -> next -> next;
+            
+            
+        }
+        
+        if(fast -> next == NULL){
+            return slow;
+        }
+        return slow -> next;
+    }
+};
+
+
+#Problem 3rd - Merge Two Sorted List
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode* result = NULL;
+        if(list1 == NULL){
+            return list2;
+        }
+        if(list2 == NULL){
+            return list1;
+        }
+        if(list1 -> val <= list2 -> val){
+            result = list1;
+            result -> next =  mergeTwoLists(list1 -> next, list2);
+        }
+        else {
+            result = list2;
+            result -> next = mergeTwoLists(list1, list2 -> next);
+        }
+        
+        return result;
+        
+    }
+};
+
+
+#Problem 4th - Remove Nth Node from the End of Linked List
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if(head -> next == NULL){
+            return NULL;
+        }
+        
+        int s = 0;
+        ListNode* ptr = head;
+        while(ptr != NULL){
+            s++;
+            ptr = ptr -> next;
+        }
+        
+        int m = s-n;
+        if(m == 0){
+            return head -> next;
+        }
+        ListNode* curr = head;
+        ListNode* nxt = head -> next;
+        while(m-1){
+            curr = nxt;
+            nxt = nxt -> next;
+            m--;
+        }
+        curr -> next = nxt -> next;
+        nxt -> next = NULL;
+        return head;
+        
+    }
+};
+
+
+#Problem 5th - Add Two Numbers as Linked List
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* headA, ListNode* headB) {
+        ListNode* t1=headA;
+        ListNode* t2=headB;
+        ListNode* prev = NULL;
+        int l1=1;
+        int l2=1;
+        while(t1->next!=NULL){
+            t1=t1->next;
+            l1++;
+        }
+        while(t2->next!=NULL){
+            t2=t2->next;
+            l2++;
+        }
+        ListNode* temp1=headA;
+        ListNode* temp2=headB;
+        int c=0;
+        if(l1>l2){
+            while(temp2  != NULL){
+                int s = temp1 -> val + temp2 -> val + c;
+                int d = s%10;
+                temp1 -> val = d;
+                temp1 = temp1 -> next;
+                temp2 = temp2 -> next;
+                c = s/10;
+                
+            }
+            
+            while(temp1 != NULL){
+                int s = temp1 -> val + c;
+                int d = s%10;
+                temp1 -> val = d;
+                prev = temp1;
+                temp1 = temp1 -> next;
+                c = s/10;
+            }
+            
+            if(c!= 0){
+                ListNode* carry = new ListNode(c);
+                prev -> next = carry;
+               // carry -> next = NULL;
+            }
+            
+            return headA;
+        }
+        
+         else if(l1 < l2){
+            while(temp1 != NULL){
+                int s = temp1 -> val + temp2 -> val + c;
+                int d = s%10;
+                temp2 -> val = d;
+                temp1 = temp1 -> next;
+                temp2 = temp2 -> next;
+                c = s/10;
+                
+            }
+            
+            while(temp2 != NULL){
+                int s = temp2 -> val + c;
+                int d = s%10;
+                temp2 -> val = d;
+                prev = temp2;
+                temp2 = temp2 -> next;
+                c = s/10;
+            }
+            
+            if(c!= 0){
+                ListNode* carry = new ListNode(c);
+                prev -> next = carry;
+               // carry -> next = NULL;
+            }
+            
+            return headB;
+        }
+        
+        else{
+             while(temp1 != NULL && temp2  != NULL){
+                int s = temp1 -> val + temp2 -> val + c;
+                int d = s%10;
+                temp1 -> val = d;
+                prev = temp1;
+                temp1 = temp1 -> next;
+                temp2 = temp2 -> next;
+                c = s/10;
+                
+            }
+         
+            if(c!= 0){
+                ListNode* carry = new ListNode(c);
+                prev -> next = carry;
+                //carry -> next = NULL;
+            }
+            
+            return headA;
+        }
+        
+    }
+};
+
+
+#Problem 6 - Delete node in a Linked List
+
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+       
+        ListNode* ptr = node;
+        while(ptr -> next != NULL){
+            ptr -> val = ptr -> next -> val;
+            ptr = ptr -> next;
+        }
+        while(node -> next -> next != NULL){
+            node = node -> next;
+        }
+        node -> next = NULL;
+    }
+};
+
+
