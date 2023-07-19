@@ -89,3 +89,82 @@ public:
         
     }
 };
+
+
+#Problem - 4
+#Kaddane's Algorithm
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        int ans = nums[0];
+        
+        for(int i=0; i<n; i++){
+            sum += nums[i];
+            
+            if(sum <= 0){
+                ans = max(ans, sum);
+                sum = 0;
+            }
+            
+            else{
+                ans = max(ans, sum);
+            }
+        }        
+        return ans;
+    }
+};
+
+
+#Problem - 5
+#Sort Colors
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        map<int, int> mp;
+        
+        for(int i=0; i<n; i++){
+            mp[nums[i]]++;
+        }
+        
+        for(int i=0; i<n; i++){
+            if(mp[0] != 0){
+                nums[i] = 0;
+                mp[0]--;
+            }
+            else if(mp[1] != 0){
+                nums[i] = 1;
+                mp[1]--;
+            }
+            else{
+                nums[i] = 2;
+                mp[2]--;
+            }
+        }
+    }
+};
+
+
+#Problem - 6
+#Stock Buy and Sell 
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int mini = INT_MAX;
+        int n = prices.size();
+        vector<int> temp;
+        
+        for(int i=0; i<n; i++){
+            mini = min(mini, prices[i]);
+            temp.push_back(prices[i] - mini);            
+        }
+        
+        int ans = *max_element(temp.begin(), temp.end());
+        return ans;       
+
+    }
+};
