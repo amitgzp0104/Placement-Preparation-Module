@@ -1,1 +1,91 @@
+#Problem - 1st 
+#Set Matrix Zeros
 
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> vrow, vcol;
+        vector<int>:: iterator it1, it2;
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(matrix[i][j] == 0){
+                    vrow.push_back(i);
+                    vcol.push_back(j);
+                }
+            }
+        }
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                it1 = find(vrow.begin(), vrow.end(),i);
+                it2 = find(vcol.begin(), vcol.end(), j);
+                if(it1 != vrow.end() || it2 != vcol.end()){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+    }
+};
+
+
+#Problem - 2nd
+#Pascal's Triangle
+
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        int n = numRows;
+        vector<vector<int>> ans;
+        
+        vector<int>st;
+        st.push_back(1);
+        ans.push_back(st);
+        if(n == 1){
+            return ans;
+        }
+        vector<int>st2;
+        if(n >= 2){            
+            st2.push_back(1);     
+            st2.push_back(1);
+        }
+        ans.push_back(st2);
+        
+        if(n ==2 ) return ans;
+        int s = 3;
+        while(s <= n){
+            vector<int> temp;
+            temp = ans.back();
+            vector<int> curr;
+            
+            for(int i=0; i<s; i++){
+                if(i == 0 || i == s-1){
+                    curr.push_back(1);
+                }
+                else{
+                    curr.push_back(temp[i-1] + temp[i]);
+                }
+            }
+            ans.push_back(curr);
+            s++;
+        }
+        
+        return ans;
+    }
+};
+
+
+#Problem - 3
+#Next Permutation
+
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+    
+        next_permutation(nums.begin(), nums.end());
+        
+    }
+};
